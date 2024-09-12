@@ -4,6 +4,11 @@ import com.burmau.amigosstudent.model.Student;
 import com.burmau.amigosstudent.repository.StudentRepository;
 import com.burmau.amigosstudent.service.StudentService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -11,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class StudentServiceImpl implements StudentService {
+public class StudentServiceImpl implements StudentService, UserDetailsService {
     private final StudentRepository studentRepository;
     @Override
     public Iterable<Student> studentList() {
@@ -36,5 +41,13 @@ public class StudentServiceImpl implements StudentService {
             student1.setMajor(student.getMajor());
             studentRepository.save(student1);
         });
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Student studentOptional = studentRepository.findByUsername(username);
+        return new User(username, studentOptional.getPassword(),
+                true, true, true,true,
+                AuthorityUtils.createAuthorityList(studentOptional.getRoles()));
     }
 }

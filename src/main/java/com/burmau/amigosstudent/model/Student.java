@@ -18,4 +18,10 @@ public class Student{
         @Email @NotBlank
         private String email;
         private String major;
+        @Column(unique = true, nullable = false, name = "username")
+        private String username;
+        @Column(unique = true, nullable = false, name = "password")
+        private String password;
+        @Column(unique = true, nullable = false, name = "roles")
+        private String roles;
 }
