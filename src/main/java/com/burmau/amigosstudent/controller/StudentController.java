@@ -1,5 +1,6 @@
 package com.burmau.amigosstudent.controller;
 
+import com.burmau.amigosstudent.mapper.StudentMapper;
 import com.burmau.amigosstudent.model.Student;
 import com.burmau.amigosstudent.service.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +10,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 
 @RestController
 @RequestMapping("api/v1/")
@@ -17,11 +21,18 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class StudentController {
     private final StudentService studentService;
-    @GetMapping
+    @GetMapping("index")
     @ResponseStatus(code = HttpStatus.OK)
     @Operation(summary = "Provides all the student objects in the database snapshot", method = "GET")
-    public Iterable<Student> allStudents(){
-        return studentService.studentList();
+    public Iterable<StudentMapper> allStudents(){
+        Collection<StudentMapper> studentMappers = new ArrayList<>();
+        for (Student student : studentService.studentList()) {
+            studentMappers.add(
+                    new StudentMapper(student.getStudent_id(), student.getName(), student.getEmail(), student.getMajor())
+            );
+        }
+
+        return studentMappers;
     }
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)

@@ -23,7 +23,7 @@ public class StudentSecurity {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.httpBasic(Customizer.withDefaults());
         return http.authorizeHttpRequests(authorizeRequests ->{
-            authorizeRequests.requestMatchers("/api/v1/").permitAll();
+            authorizeRequests.requestMatchers("/api/v1/index").permitAll();
             authorizeRequests.requestMatchers("/login").permitAll();
             authorizeRequests.requestMatchers("/signup").permitAll();
             authorizeRequests.anyRequest().authenticated();
