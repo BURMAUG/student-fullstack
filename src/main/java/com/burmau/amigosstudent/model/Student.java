@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor @NoArgsConstructor
 @ToString @EqualsAndHashCode
 @Getter @Setter
+@Table(name = "students")
 public class Student{
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

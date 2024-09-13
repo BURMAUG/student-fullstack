@@ -24,6 +24,7 @@ public class StudentSecurity {
         http.httpBasic(Customizer.withDefaults());
         return http.authorizeHttpRequests(authorizeRequests ->{
             authorizeRequests.requestMatchers("/api/v1/index").permitAll();
+            authorizeRequests.requestMatchers("http://localhost:8080/v3/api-doc").permitAll();
             authorizeRequests.requestMatchers("/login").permitAll();
             authorizeRequests.requestMatchers("/signup").permitAll();
             authorizeRequests.anyRequest().authenticated();

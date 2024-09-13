@@ -15,7 +15,7 @@ public class StudentConfig {
                 .info(new Info().title("Student Display API")
                 .version(appVersion)
                 .description(appDescription)
-                .termsOfService("htt://swagger.io/terms.")
+                .termsOfService("http://swagger.io/terms/")
                 .license(new License().name("Apache 2.0")
                         .url("http://springdoc.org")));
     }
